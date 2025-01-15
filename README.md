@@ -1,5 +1,5 @@
 # fishing
-A python fishing game. I promise I'll finish it someday.
+A slow-paced, lighthearded fishing game. Uses no pictures, it is only text, similar to the olden days.
 
-## To play:
-Go to <a href="https://www.online-python.com/">Online Python</a> and copy the contents of `fishing.py` into the code editor. Click **run** and click on the arrows at the bottom of the terminal sidebar to make the game fullscreen.
+**Play here:**
+<a href="https://evanworks.github.io/fishing">https://evanworks.github.io/fishing</a>

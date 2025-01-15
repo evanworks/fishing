@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wave Effect</title>
+    <style>
+        canvas {
+            display: block;
+            margin: 0 auto;
+            background: black;
+        }
+    </style>
+</head>
+<body>
+    
+    <script>
+        const canvas = document.getElementById('waveCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        ctx.fillStyle = 'rgba(0, 0, 0, 0)';
+
+        const image = new Image();
+        image.src = 'lake-waves.png';
+
+        const wave = {
+            x: 0,
+            speed: 1000,
+        };
+
+        image.onload = () => {
+            const imgWidth = image.width;
+            const imgHeight = image.height;
+
+            function drawWave() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const yPosition = canvas.height - imgHeight;
+
+                for (let x = 0; x < canvas.width; x += imgWidth) {
+                    ctx.drawImage(image, wave.x + x, yPosition, imgWidth, imgHeight);
+                    ctx.drawImage(image, wave.x + x - imgWidth, yPosition, imgWidth, imgHeight);
+                }
+
+                wave.x = (wave.x + wave.speed) % imgWidth;
+
+                requestAnimationFrame(drawWave);
+            }
+
+            drawWave();
+        };
+    </script>
+</body>
+</html>

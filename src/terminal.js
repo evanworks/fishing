@@ -122,8 +122,8 @@ setInterval(() => {
 function updateResources() {
   resources = document.getElementById("resources");
 
-  resources.innerHTML = "$"+money;
-  resources.innerHTML += " | Bait: "+bait;
+  resources.innerHTML = "<img src='res/img/coin.png' class='icon'>"+money;
+  resources.innerHTML += " | <img src='res/img/bait.png' class='icon'>"+bait;
 }
 
 /*const canvas = document.getElementById('waveCanvas');

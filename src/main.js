@@ -1,7 +1,7 @@
 let day = 0;
 let year = 1;
 
-let money = 0;
+let money = 10;
 
 let bait = 5;
 let worms = 0;
@@ -12,7 +12,7 @@ let enteredShopThisDay = false;
 
 function newDay() {
   enteredShopThisDay = false;
-  document.getElementById("terminal").style.width = "40%";
+  document.getElementById("terminal").style.width = "520px";
   day += 1;
   clearTerminal();
   log("<div style='text-align:center;'>============</div>", 60);

@@ -1,7 +1,10 @@
 let day = 0;
 let year = 1;
 
-let money = 10;
+let maxStamina = 5;
+let stamina = maxStamina;
+
+let money = 100;
 
 let bait = 5;
 let worms = 0;
@@ -14,6 +17,10 @@ function newDay() {
   enteredShopThisDay = false;
   document.getElementById("terminal").style.width = "520px";
   day += 1;
+
+  home();
+}
+function home() {
   clearTerminal();
   log("<div style='text-align:center;'>============</div>", 60);
   log("<div style='text-align:center;'>DAY " + day + " YEAR " + year + "</div>", 50);

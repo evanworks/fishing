@@ -84,7 +84,8 @@ const jim = {
 
 const pearl = {
   name: "a pearl",
-  img: "res/img/fish/default.png",price: 50,
+  img: "res/img/fish/pearl.png",
+  price: 50,
   desc: "Parted with its oyster long ago.",
   canBeHighQuality: true
 }
@@ -112,16 +113,17 @@ function dock() {
 
   setTimeout(() => {
     if (bait > 0) {
-      log("<br/>Press [ENTER] to cast your line.");
-      document.addEventListener('keypress', fish)
+      log("<br/>You're feeling refreshed.");
+      setTimeout(()=>{
+        createPicker([["Cast line", "castLine"], ["Change bait", "fish"], ["Eat something", "shop"], ["Leave", "home"]])
+      }, 800)
     }
-  }, 4000)
+  }, 5000)
 }
 
 function fish() {
   console.log(event.key)
   if (event.key == "Enter") {
-    document.removeEventListener('keypress', fish);
     setTimeout(() => {
       if (fishingPlace == "dock") {
         caughtFish = doLootTable(dockTable);
@@ -151,20 +153,33 @@ function fish() {
 
         money += pricething;
         bait -= 1;
+
+        stamina--;
         
         window.scrollTo(0, document.body.scrollHeight);
       }, 2000)
       setTimeout(() => {
+        greyOutTerminal();
         if (bait > 0) {
-          log("<br/><br/>Press [ENTER] to cast your line.");
-          document.addEventListener('keypress', fish)
+          let msg = "<br/>"
+          if (stamina > 3) {
+            msg += randFromArray(["You're feeling refreshed.", "You're feeling happy.", "You're spacing out."])
+          } else if (stamina <= 3 && stamina >=2 ) {
+            msg += randFromArray(["You're feeling sentimental.", "You're slightly sunburnt.", "You're feeling slightly thirsty."])
+          } else {
+            msg += randFromArray(["You're feeling tired.", "You're very thirsty.", "You're ready to go home."])
+          }
+          //log(msg);
+          setTimeout(()=>{
+            createPicker([["Cast line", "castLine"], ["Change bait", "fish"], ["Eat something", "shop"], ["Leave", "home"]])
+          }, 800)
         } else {
-          log("<br/><br/>Looks like you're out of bait! You can buy more at the shop.", 40);
-          setTimeout(() => {
-            newDay();
-          }, 6000)
+          log("<br/>You feel annoyed. You're out of bait.");
+          setTimeout(()=>{
+            createPicker([["Change bait", "fish"], ["Eat something", "shop"], ["Leave", "home"]])
+          }, 800)
         }
-      }, 4000)
+      }, 5000)
     }, 500);
   }
 }
@@ -211,3 +226,8 @@ for (let i = 0; i < 1000; i++) {
 }
 
 console.log("Pearl: " + scottfishcount/10 + "%");
+
+function randFromArray(array) {
+  const i = Math.floor(Math.random() * array.length);
+  return array[i];
+} 

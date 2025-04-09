@@ -1,6 +1,9 @@
 let enteredShop = true;
 
 baitPrice = 2;
+wormsPrice = 5;
+
+const baitItem = {}
 
 function shop() {
   document.getElementById("terminal").style.width = "100%";

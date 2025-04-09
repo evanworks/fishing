@@ -15,6 +15,14 @@ function clearTerminal() {
   let terminal = document.getElementById("terminal");
   terminal.innerHTML = "";
 }
+function greyOutTerminal() {
+  const terminal = document.getElementById("terminal");
+  for (let i = 0; i < terminal.children.length; i++) {
+    terminal.children[i].style.color = "#c0c0c0";
+    terminal.children[i].style.userSelelect = "none";
+    terminal.children[i].style.animation = "none";
+  }
+}
 
 
 function createPicker(options) {
@@ -93,10 +101,16 @@ function handlePickerInputs() {
       shop();
     }
 
-    if (selected == "bait") {
-      baitShop();
+    if (selected == "castLine") {
+      fish();
     } else if (selected == "newDay") {
       newDay();
+    }
+
+    if (selected == "bait") {
+      baitShop();
+    } else if (selected == "home") {
+      home();
     }
 
     if (selected == "buyBait") {
@@ -121,9 +135,21 @@ setInterval(() => {
 
 function updateResources() {
   resources = document.getElementById("resources");
-
-  resources.innerHTML = "<img src='res/img/coin.png' class='icon'>"+money;
+  
+  let staminaLevel;
+  if (stamina <= 3 && stamina >= 2/*Math.floor(staminaLevel/3) < stamina < Math.floor(staminaLevel/2) + 1*/) {
+    staminaLevel = "half";
+  } else if (stamina <= 1) {
+    staminaLevel = "empty"
+  } else {
+    staminaLevel = "full"
+  }
+  resources.innerHTML = "<img src='res/img/stamina/stamina-"+staminaLevel+".png' class='icon' style='margin-right:5px;'>"+stamina+" | ";
+  resources.innerHTML += "<img src='res/img/coin.png' class='icon'>"+money;
   resources.innerHTML += " | <img src='res/img/bait.png' class='icon'>"+bait;
+  if (worms > 0) {
+    resources.innerHTML += " <img src='res/img/worms.png' class='icon'>"+worms;
+  }
 }
 
 /*const canvas = document.getElementById('waveCanvas');

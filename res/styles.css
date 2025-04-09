@@ -2,9 +2,24 @@
   cursor: default; 
 }
 body {
+  width: 100vw;
+  height: 90vh;
   background: black;
   background-size: 50%;
   overflow-x: hidden;
+  text-shadow:
+  0 0 1ex #c0c0c0,
+  0 0 2px rgba(255, 255, 255, 0.8);
+
+  font-size: 14px;
+
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+
+  overflow-y: hidden;
+}
+::-webkit-scrollbar { 
+  width: 100px;
 }
 i {
   color: #c0c0c0;
@@ -13,31 +28,31 @@ i {
   padding: 10px;
   color: white;
   font-family: monospace;
-  position: sticky;
+  position: fixed;
+  margin-bottom: 10px;
+  background: black;
 }
 
 #terminal {
   background: rgba(0,0,0,0.5);
   width: 520px;
   height: calc(100% - 20px);
-  margin-top: 0px;
   color: white;
   font-family: monospace;
   line-height: 150%;
-  padding: 10px;
+  padding: 20px;
+  padding-top: 50px;
 }
 
 .container {
   display: block;
   position: relative;
   padding-left: 30px;
-  cursor: pointer;
 }
 
 .container input {
   position: absolute;
   opacity: 0;
-  cursor: pointer;
 }
 
 .picker {
@@ -48,10 +63,12 @@ i {
   width: 25px;
   text-align: center;
   color: black;
+  text-shadow: none;
 }
 
 .container:hover input ~ .picker {
   color: black;
+  text-shadow: none;
 }
 
 .container input:checked ~ .picker {
@@ -60,6 +77,7 @@ i {
 
 .picker:after {
   color: black;
+  text-shadow: none;
 }
 
 .container input:checked ~ .picker:after {
@@ -200,4 +218,25 @@ form {
   100% {
     width: 80px;
   }
+}
+
+.overlay {
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background:
+      repeating-linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0,
+      rgba(0, 0, 0, 0.2) 50%,
+      rgba(0, 0, 0, 0) 100%);
+  background-size: auto 4px;
+  z-index: 1;
+  animation: scan 5s infinite;
+}
+
+@keyframes scan {
+  0%        { background-position: 0 -100vh; }
+  100% { background-position: 0 100vh; }
 }

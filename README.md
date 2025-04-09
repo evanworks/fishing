@@ -6,6 +6,12 @@ A slow-paced, lighthearded fishing game. Helps to unwind, or soothe the soul, or
 
 ## Changelog
 
+### a-APR[0.03]
+More stuff
+* "post-proccessing"
+* you're slightly sunburnt etc
+* supposed shop rework
+* grey
 
 ### a-APR[0.0.2]
 Fixes, major gameplay changes, etc.

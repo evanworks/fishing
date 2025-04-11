@@ -18,21 +18,21 @@ function newDay() {
   document.getElementById("terminal").style.width = "520px";
   day += 1;
 
-  home();
-}
-function home() {
   clearTerminal();
   log("<div style='text-align:center;'>============</div>", 60);
-  log("<div style='text-align:center;'>DAY " + day + " YEAR " + year + "</div>", 50);
+  log("<div style='text-align:center;'>DAY " + day + " YEAR " + year + "</div>", 60);
   log("<div style='text-align:center;'>============</div>", 60);
   setTimeout(() => {length = storyMsg();console.log(length);}, 1000);
-  
+
   setTimeout(() => {
-    log("<br/><br/>What shall it be today?", 20);
-    setTimeout(()=>{
-      createPicker([["Go to bed", "bed"], ["Go fishing", "fish"], ["Go shopping", "shop"]])
-    }, 1000)
+    home();
   }, 8000)
+}
+function home() {
+  log("<br/><br/>What shall it be today?", 20);
+  setTimeout(()=>{
+    createPicker([["Go to bed", "bed"], ["Go fishing", "fish"], ["Go shopping", "shop"]])
+  }, 1000)
 }
 
 function storyMsg() {
@@ -52,6 +52,7 @@ function start() {
 
 function bed() {
   log("You go to bed early today.", 70);
+  log(" (This is mainly for debug purposes but whatever)")
   sleptYesterday = true;
   setTimeout(()=>{
     newDay();

@@ -6,6 +6,10 @@ A slow-paced, lighthearded fishing game. Helps to unwind, or soothe the soul, or
 
 ## Changelog
 
+### a-APR[0.0.4]
+No point in writing changelogs at this stage, it's mostly just bugfixes
+Check the code if you want to see exactly what's changed
+
 ### a-APR[0.03]
 More stuff
 * "post-proccessing"

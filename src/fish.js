@@ -159,25 +159,30 @@ function fish() {
         window.scrollTo(0, document.body.scrollHeight);
       }, 2000)
       setTimeout(() => {
-        greyOutTerminal();
-        if (bait > 0) {
-          let msg = "<br/>"
-          if (stamina > 3) {
-            msg += randFromArray(["You're feeling refreshed.", "You're feeling happy.", "You're spacing out."])
-          } else if (stamina <= 3 && stamina >=2 ) {
-            msg += randFromArray(["You're feeling sentimental.", "You're slightly sunburnt.", "You're feeling slightly thirsty."])
-          } else {
-            msg += randFromArray(["You're feeling tired.", "You're very thirsty.", "You're ready to go home."])
-          }
-          //log(msg);
-          setTimeout(()=>{
-            createPicker([["Cast line", "castLine"], ["Change bait", "fish"], ["Eat something", "shop"], ["Leave", "home"]])
-          }, 800)
+        if (stamina == 0) {
+          log("<br/><br/>You fall asleep due to exhaustion.", 50);
+          setTimeout(newDay, 300);
         } else {
-          log("<br/>You feel annoyed. You're out of bait.");
-          setTimeout(()=>{
-            createPicker([["Change bait", "fish"], ["Eat something", "shop"], ["Leave", "home"]])
-          }, 800)
+          if (bait > 0) {
+            let msg = "<br/>"
+            if (stamina > 3) {
+              msg += randFromArray(["You're feeling refreshed.", "You're feeling happy.", "You're spacing out."])
+            } else if (stamina <= 3 && stamina >=2 ) {
+              msg += randFromArray(["You're feeling sentimental.", "You're slightly sunburnt.", "You're feeling slightly thirsty."])
+            } else {
+              msg += randFromArray(["You're feeling tired.", "You're very thirsty.", "You're ready to go home."])
+            }
+            //log(msg);
+            log("<br/><br/>")
+            setTimeout(()=>{
+              createPicker([["Cast line", "castLine"], ["Change bait", "fish"], ["Eat something", "shop"], ["Leave", "home"]])
+            }, 200)
+          } else {
+            log("<br/>You feel annoyed. You're out of bait.");
+            setTimeout(()=>{
+              createPicker([["Change bait", "fish"], ["Eat something", "shop"], ["Leave", "home"]])
+            }, 800)
+          }
         }
       }, 5000)
     }, 500);

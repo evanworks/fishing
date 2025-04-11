@@ -16,12 +16,13 @@ function clearTerminal() {
   terminal.innerHTML = "";
 }
 function greyOutTerminal() {
-  const terminal = document.getElementById("terminal");
+  //clearTerminal();
+  /*const terminal = document.getElementById("terminal");
   for (let i = 0; i < terminal.children.length; i++) {
     terminal.children[i].style.color = "#c0c0c0";
-    terminal.children[i].style.userSelelect = "none";
+    terminal.children[i].style.userSelect = "none";
     terminal.children[i].style.animation = "none";
-  }
+  }*/
 }
 
 
@@ -30,10 +31,12 @@ function createPicker(options) {
     log("Use the up and down arrows to select an option. Press ENTER to confirm.", 10)
     firstpicker = false;
   }
+
+  let onebigstring = "<div>";
   for (i in options) {
     item = options[i];
     if (i == 0) {
-      terminal.innerHTML += `
+      onebigstring += `
       <label class="container">
       `+item[0]+`
       <input type="radio" id="`+item[1]+`" name="picker" value="`+item[0]+`" checked='checked'>
@@ -42,7 +45,7 @@ function createPicker(options) {
 
       `
     } else {
-      terminal.innerHTML += `
+      onebigstring += `
       <label class="container">
       `+item[0]+`
       <input type="radio" id="`+item[1]+`" name="picker" value="`+item[0]+`">
@@ -52,9 +55,12 @@ function createPicker(options) {
       `
     }
   }
+  onebigstring += "</div>";
+  terminal.innerHTML += onebigstring;
   document.getElementById(options[0][1]).focus();
   document.addEventListener('keypress', handlePickerInputs);
 }
+
 function createInput(inputName) {
   terminal.innerHTML += `
     <form id='`+inputName+`Form'>
@@ -89,7 +95,17 @@ function handlePickerInputs() {
   const keyPressed = event.key; 
 
   if (event.key == "Enter") {
-    selected = document.activeElement.id;
+    let selected = document.activeElement.id;
+
+    // to fix issue of being able to select already selected pickers
+    let ohno = document.activeElement.parentElement;
+    let ohnoo = ohno.parentElement
+
+    for (let i = 0; i < ohnoo.children.length; i++) {
+     let ohnooo = ohnoo.children[i];
+     console.log(ohnooo)
+     ohnooo.children[0].disabled = true;
+    }
 
     // stupid solution to a hard problem
 
@@ -110,6 +126,7 @@ function handlePickerInputs() {
     if (selected == "bait") {
       baitShop();
     } else if (selected == "home") {
+      clearTerminal();
       home();
     }
 
@@ -144,7 +161,7 @@ function updateResources() {
   } else {
     staminaLevel = "full"
   }
-  resources.innerHTML = "<img src='res/img/stamina/stamina-"+staminaLevel+".png' class='icon' style='margin-right:5px;'>"+stamina+" | ";
+  resources.innerHTML = "<img src='res/img/stamina/stamina-"+staminaLevel+".png' class='icon "+staminaLevel+"' style='margin-right:5px;'>"+stamina+" | ";
   resources.innerHTML += "<img src='res/img/coin.png' class='icon'>"+money;
   resources.innerHTML += " | <img src='res/img/bait.png' class='icon'>"+bait;
   if (worms > 0) {

@@ -1,9 +1,24 @@
 let enteredShop = true;
 
-baitPrice = 2;
-wormsPrice = 5;
-
-const baitItem = {}
+const baitItem = {
+  name: "bait",
+  get correspondingItem() {
+    return bait;
+  },
+  set correspondingItem(val) {
+    bait = val;
+  },
+  price: 2,
+  img: "bait.png",
+  flexPlural: "pieces of bait"
+}
+const wormsItem = {
+  name: "worms",
+  correspondingItem: "worms",
+  price: 5,
+  img: "worms.png",
+  flexPlural: "worms"
+}
 
 function shop() {
   document.getElementById("terminal").style.width = "100%";
@@ -58,16 +73,15 @@ function gear() {}
 function gadgets() {}
 
 function buyItem(item) {
-  log("<br/>How many " + item + " would you like?", 20);
+  log("<br/>How many " + item.flexPlural + " would you like?", 20);
   setTimeout(() => {
     createInput(item);
   }, 2000)
 }
 
 function purchase(amount, item) {
-  console.log("purchasing" + amount + " of " + item);
   amount = parseInt(amount);
-  let pay = amount * window[item + "Price"]
+  let pay = item.price * amount;
   if (pay > money) { 
     log("<br/>You don't have enough money to buy this.", 20)
     setTimeout(()=>{
@@ -75,16 +89,19 @@ function purchase(amount, item) {
     }, 2000)
   } else {
     money -= pay;
-    bait += amount;
+    
+    item.correspondingItem += amount;
 
-    log("<br/>- <img src='res/img/coin.png' class='icon'>"+pay);
-    log("<br/>+<img src='res/img/"+item+".png' class='icon'>"+amount);
+    log("<br/><img src='res/img/coin.png' class='icon'>-"+pay);
+    log("<br/><img src='res/img/"+item.img+"' class='icon'>"+amount);
 
-    updateResources();
+    stamina--;
 
     setTimeout(()=>{
-      shop();
+      if (stamina <= 0) newDay();
+      else shop();
     }, 1500)
+
   }
 }
 

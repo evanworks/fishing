@@ -6,8 +6,14 @@ A slow-paced, lighthearded fishing game. Helps to unwind, or soothe the soul, or
 
 ## Changelog
 
+### a-APR[0.0.5]
+More bugfixes to prepare for actually adding content
+* full implementation of stamina
+* not really qol fishing things
+* refactoring retractoring
+
 ### a-APR[0.0.4]
-No point in writing changelogs at this stage, it's mostly just bugfixes
+No point in writing changelogs at this stage, it's mostly just bugfixes<br/>
 Check the code if you want to see exactly what's changed
 
 ### a-APR[0.03]

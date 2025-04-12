@@ -33,13 +33,14 @@ function createPicker(options) {
   }
 
   let onebigstring = "<div>";
+  let rand = Math.floor(Math.random() * 10000);
   for (i in options) {
     item = options[i];
     if (i == 0) {
       onebigstring += `
       <label class="container">
       `+item[0]+`
-      <input type="radio" id="`+item[1]+`" name="picker" value="`+item[0]+`" checked='checked'>
+      <input type="radio" id="`+item[1]+rand+`" name="picker" value="`+item[0]+`" checked='checked'>
       <span class="picker"> > </span>
       </label>
 
@@ -48,7 +49,7 @@ function createPicker(options) {
       onebigstring += `
       <label class="container">
       `+item[0]+`
-      <input type="radio" id="`+item[1]+`" name="picker" value="`+item[0]+`">
+      <input type="radio" id="`+item[1]+rand+`" name="picker" value="`+item[0]+`">
       <span class="picker"> > </span>
       </label>
 
@@ -57,18 +58,25 @@ function createPicker(options) {
   }
   onebigstring += "</div>";
   terminal.innerHTML += onebigstring;
-  document.getElementById(options[0][1]).focus();
+  document.getElementById(options[0][1]+rand).focus();
   document.addEventListener('keypress', handlePickerInputs);
 }
 
-function createInput(inputName) {
+function createInput(item) {
   terminal.innerHTML += `
-    <form id='`+inputName+`Form'>
-    > <input id='`+inputName+`' name='`+inputName+`'>
+    <form id='`+item.name+`Form'>
+    > <input id='`+item.name+`' name='`+item.name+`'>
     </input>
     `
-  document.getElementById(inputName).focus();
-  document.getElementById(inputName+'Form').addEventListener('keypress', handleInputInputs);
+  document.getElementById(item.name).focus();
+  document.getElementById(item.name+'Form').addEventListener('keypress', (event) => {
+    if (event.key == "Enter") {
+      event.preventDefault();
+      let form = document.getElementById(document.activeElement.id + "Form");
+      let amnt = form.elements[document.activeElement.id].value; 
+      purchase(amnt, item);
+    }
+  });
 }
 
 function handleInputInputs() {
@@ -81,10 +89,6 @@ function handleInputInputs() {
     let form = document.getElementById(document.activeElement.id + "Form");
     let num = form.elements[document.activeElement.id].value; 
 
-    if (item == "pieces of bait") {
-      actualItem = "bait";
-    }
-  
     purchase(num, actualItem);
     document.removeEventListener('keypress', handlePickerInputs);
   }
@@ -96,6 +100,7 @@ function handlePickerInputs() {
 
   if (event.key == "Enter") {
     let selected = document.activeElement.id;
+    selected = removeNumbers(selected);
 
     // to fix issue of being able to select already selected pickers
     let ohno = document.activeElement.parentElement;
@@ -103,7 +108,6 @@ function handlePickerInputs() {
 
     for (let i = 0; i < ohnoo.children.length; i++) {
      let ohnooo = ohnoo.children[i];
-     console.log(ohnooo)
      ohnooo.children[0].disabled = true;
     }
 
@@ -130,12 +134,12 @@ function handlePickerInputs() {
       home();
     }
 
-    if (selected == "buyBait") {
-      buyItem("pieces of bait");
-    } else if (selected == "buyWorms") {
-      buyItem("worms");
-    }
-    
+    if (selected.startsWith("buy")) {
+      let bought = selected.replace("buy", "");
+      bought = bought.toLowerCase();
+      buyItem(eval(bought + "Item"))
+    } 
+
     if (selected == "dock") {
       dock();
     }
@@ -227,3 +231,8 @@ Object.defineProperty(String.prototype, 'capitalize', {
   },
   enumerable: false
 });
+
+// me
+function removeNumbers(str) {
+  return str.replace(/[0-9]/g, ''); // oh i love this stuff
+}

@@ -22,7 +22,7 @@ function newDay() {
   log("<div style='text-align:center;'>============</div>", 60);
   log("<div style='text-align:center;'>DAY " + day + " YEAR " + year + "</div>", 60);
   log("<div style='text-align:center;'>============</div>", 60);
-  setTimeout(() => {length = storyMsg();console.log(length);}, 1000);
+  setTimeout(() => {length = storyMsg();}, 1000);
 
   setTimeout(() => {
     home();
